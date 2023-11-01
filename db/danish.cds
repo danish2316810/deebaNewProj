@@ -33,7 +33,7 @@ entity purchaseOrder {
   PURCHASE_OR_NUM	: String(17);
   COMPANY_NAME	: String(60);
   ADDRESS_GUID : Association to address;
-  LINE_ITEMS:Association to ITEMS
+  LINE_ITEMS:Association to ITEMS;
 
 }
 
@@ -43,7 +43,7 @@ entity ITEMS{
   QUANTITY	: Int16;
   PRICE	: Int16;
   UNIT_PRICE	:Int16;
-  purchaseOrder: Association to one purchaseOrder on purchaseOrder.LINE_ITEMS=$self
+  // purchaseOrder: Association to one purchaseOrder on purchaseOrder.LINE_ITEMS=$self
 
  }
 }
