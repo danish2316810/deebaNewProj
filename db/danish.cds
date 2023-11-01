@@ -11,7 +11,7 @@ context Master {
   key ID : UUID;
   BP_ROLE : String(1);
   EMAIL : String(60);
-  PHONE_NUMBER : Int16;
+  PHONE_NUMBER : String(20);
   ADDRESS_GUID : Association to address;
   COMPANY_NAME : String(60);
   
@@ -20,7 +20,7 @@ context Master {
 entity address {
  key ID	: UUID;
   CITY	: String(60);
-  POSTAL_CODE	: Int16;
+  POSTAL_CODE	: String(20);
   BUILDING	: String(60);
   STREET	: String(60);
   COUNTRY	: String(60);
