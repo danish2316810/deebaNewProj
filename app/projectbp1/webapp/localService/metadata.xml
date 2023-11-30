@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="4.0" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+    <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/Common.xml">
+        <edmx:Include Alias="Common" Namespace="com.sap.vocabularies.Common.v1"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Core.V1.xml">
+        <edmx:Include Alias="Core" Namespace="Org.OData.Core.V1"/>
+    </edmx:Reference>
+    <edmx:DataServices>
+        <Schema Namespace="CatalogService" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+            <EntityContainer Name="EntityContainer">
+                <EntitySet Name="bussinessPartner" EntityType="CatalogService.bussinessPartner">
+                    <NavigationPropertyBinding Path="ADDRESS_GUID" Target="address"/>
+                </EntitySet>
+                <EntitySet Name="address" EntityType="CatalogService.address">
+                    <NavigationPropertyBinding Path="bussinessPartner" Target="bussinessPartner"/>
+                    <NavigationPropertyBinding Path="purchaseOrder" Target="purchaseOrder"/>
+                </EntitySet>
+                <EntitySet Name="purchaseOrder" EntityType="CatalogService.purchaseOrder">
+                    <NavigationPropertyBinding Path="ADDRESS_GUID" Target="address"/>
+                    <NavigationPropertyBinding Path="LINE_ITEMS" Target="ITEMS"/>
+                </EntitySet>
+                <EntitySet Name="ITEMS" EntityType="CatalogService.ITEMS"/>
+            </EntityContainer>
+            <EntityType Name="bussinessPartner">
+                <Key>
+                    <PropertyRef Name="ID"/>
+                </Key>
+                <Property Name="ID" Type="Edm.String" MaxLength="36" Nullable="false"/>
+                <Property Name="BP_ROLE" Type="Edm.String" MaxLength="1"/>
+                <Property Name="EMAIL" Type="Edm.String" MaxLength="60"/>
+                <Property Name="PHONE_NUMBER" Type="Edm.String" MaxLength="20"/>
+                <NavigationProperty Name="ADDRESS_GUID" Type="CatalogService.address" Partner="bussinessPartner">
+                    <ReferentialConstraint Property="ADDRESS_GUID_ID" ReferencedProperty="ID"/>
+                </NavigationProperty>
+                <Property Name="ADDRESS_GUID_ID" Type="Edm.String" MaxLength="36"/>
+                <Property Name="COMPANY_NAME" Type="Edm.String" MaxLength="60"/>
+            </EntityType>
+            <EntityType Name="address">
+                <Key>
+                    <PropertyRef Name="ID"/>
+                </Key>
+                <Property Name="ID" Type="Edm.String" MaxLength="36" Nullable="false"/>
+                <Property Name="CITY" Type="Edm.String" MaxLength="60"/>
+                <Property Name="POSTAL_CODE" Type="Edm.String" MaxLength="20"/>
+                <Property Name="BUILDING" Type="Edm.String" MaxLength="60"/>
+                <Property Name="STREET" Type="Edm.String" MaxLength="60"/>
+                <Property Name="COUNTRY" Type="Edm.String" MaxLength="60"/>
+                <NavigationProperty Name="bussinessPartner" Type="CatalogService.bussinessPartner" Partner="ADDRESS_GUID">
+                    <ReferentialConstraint Property="ID" ReferencedProperty="ADDRESS_GUID_ID"/>
+                </NavigationProperty>
+                <NavigationProperty Name="purchaseOrder" Type="CatalogService.purchaseOrder" Partner="ADDRESS_GUID">
+                    <ReferentialConstraint Property="ID" ReferencedProperty="ADDRESS_GUID_ID"/>
+                </NavigationProperty>
+            </EntityType>
+            <EntityType Name="purchaseOrder">
+                <Key>
+                    <PropertyRef Name="ID"/>
+                </Key>
+                <Property Name="ID" Type="Edm.String" MaxLength="36" Nullable="false"/>
+                <Property Name="PURCHASE_OR_NUM" Type="Edm.String" MaxLength="17"/>
+                <Property Name="COMPANY_NAME" Type="Edm.String" MaxLength="60"/>
+                <NavigationProperty Name="ADDRESS_GUID" Type="CatalogService.address" Partner="purchaseOrder">
+                    <ReferentialConstraint Property="ADDRESS_GUID_ID" ReferencedProperty="ID"/>
+                </NavigationProperty>
+                <Property Name="ADDRESS_GUID_ID" Type="Edm.String" MaxLength="36"/>
+                <NavigationProperty Name="LINE_ITEMS" Type="CatalogService.ITEMS">
+                    <ReferentialConstraint Property="LINE_ITEMS_ID" ReferencedProperty="ID"/>
+                </NavigationProperty>
+                <Property Name="LINE_ITEMS_ID" Type="Edm.String" MaxLength="36"/>
+            </EntityType>
+            <EntityType Name="ITEMS">
+                <Key>
+                    <PropertyRef Name="ID"/>
+                </Key>
+                <Property Name="ID" Type="Edm.String" MaxLength="36" Nullable="false"/>
+                <Property Name="SO_NUMBER" Type="Edm.String" MaxLength="40"/>
+                <Property Name="QUANTITY" Type="Edm.Int16"/>
+                <Property Name="PRICE" Type="Edm.Int16"/>
+                <Property Name="UNIT_PRICE" Type="Edm.Int16"/>
+            </EntityType>
+        </Schema>
+    </edmx:DataServices>
+</edmx:Edmx>

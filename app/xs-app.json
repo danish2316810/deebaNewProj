@@ -1,0 +1,16 @@
+{
+  "authenticationMethod": "none",
+  "routes": [
+    {
+      "source": "^/CatalogService(.*)",
+      "destination": "srv-api",
+      "csrfProitection": true
+    },
+    {
+      "source": "^/CDSService(.*)",
+      "destination": "srv-api",
+      "csrfProitection": true
+    }
+  ],
+  "welcomeFile": "/bpbussinessprojectbp1"
+}

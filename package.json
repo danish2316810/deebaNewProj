@@ -1,38 +1,47 @@
 {
-  "name": "deebanewproj",
-  "version": "1.0.0",
-  "description": "A simple CAP project.",
-  "repository": {
-    "type": "git",
-    "url": "<Add your repository here>"
-  },
-  "license": "UNLICENSED",
-  "private": true,
-  "dependencies": {
-    "@sap/cds": "^7",
-    "express": "^4",
-    "@sap/cds-hana": "^2"
-  },
-  "devDependencies": {
-    "@cap-js/sqlite": "^1",
-    "@sap/cds-dk": "^7"
-  },
-  "scripts": {
-    "start": "cds-serve"
-  },
-  "cds": {
-    "build": {
-      "target": "."
+    "name": "deebanewproj",
+    "version": "1.0.0",
+    "description": "A simple CAP project.",
+    "repository": {
+        "type": "git",
+        "url": "<Add your repository here>"
     },
-    "hana": {
-      "deploy-format": "hdbtable"
+    "license": "UNLICENSED",
+    "private": true,
+    "dependencies": {
+        "@sap/cds": "^7",
+        "@sap/cds-hana": "^2",
+        "express": "^4"
     },
-    "requires": {
-      "db": {
-        "kind": "hana"
-      }
-    }
-  },
-  "main": "index.js",
-  "author": ""
+    "devDependencies": {
+        "@cap-js/sqlite": "^1",
+        "@sap/cds-dk": "^7",
+        "@sap/ux-specification": "^1.120.0",
+        "rimraf": "^3.0.2"
+    },
+    "scripts": {
+        "start": "cds-serve",
+        "watch-projectbp1": "cds watch --open projectbp1/webapp/index.html?sap-ui-xx-viewCache=false",
+        "undeploy": "cf undeploy deebaNewProj --delete-services --delete-service-keys --delete-service-brokers",
+        "build": "rimraf resources mta_archives && mbt build --mtar archive",
+        "deploy": "cf deploy mta_archives/archive.mtar --retries 1"
+    },
+    "cds": {
+        "build": {
+            "target": "."
+        },
+        "hana": {
+            "deploy-format": "hdbtable"
+        },
+        "requires": {
+            "db": {
+                "kind": "hana"
+            }
+        }
+    },
+    "main": "index.js",
+    "author": "",
+    "sapux": [
+        "app/projectbp1"
+    ]
 }
